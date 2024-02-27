@@ -15,7 +15,7 @@ final class CharactersUseCase: CharactersUseCaseProtocol {
     
     let charactersRepository: CharactersRepositoryProtocol
     
-    init(charactersRepository: CharactersRepositoryProtocol = CharactersRepositoryImpl()) {
+    init(charactersRepository: CharactersRepositoryProtocol) {
         self.charactersRepository = charactersRepository
     }
     
