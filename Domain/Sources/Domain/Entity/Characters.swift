@@ -8,13 +8,13 @@
 import Foundation
 
 // MARK: - Characters
-struct CharactersResponse: Decodable {
-    let info: Info
-    let results: [Character]
+public struct CharactersResponse: Decodable {
+    public let info: Info
+    public let results: [Character]
 }
 
 // MARK: - Info
-struct Info: Decodable {
+public struct Info: Decodable {
     let count: Int
     let pages: Int
     let next: String?
@@ -22,7 +22,7 @@ struct Info: Decodable {
 }
 
 // MARK: - Result
-struct Character: Decodable {
+public struct Character: Decodable {
     let id: Int
     let name: String
     let status: Status
@@ -37,7 +37,7 @@ struct Character: Decodable {
     let created: String
 }
 
-enum Gender: String, Codable {
+public enum Gender: String, Codable {
     case Female
     case Male
     case Genderless
@@ -45,7 +45,7 @@ enum Gender: String, Codable {
 }
 
 // MARK: - Location
-struct Location: Decodable {
+public struct Location: Decodable {
     let name: String
     let url: String
 }
@@ -58,13 +58,13 @@ struct Location: Decodable {
 //    case Poopybutthole
 //}
 
-enum Status: String, Codable {
+public enum Status: String, Codable {
     case Alive
     case Dead
     case unknown
 }
 
-struct Filter: Encodable {
+public struct Filter: Encodable {
     let name: String
     let status: Status
     let species: String

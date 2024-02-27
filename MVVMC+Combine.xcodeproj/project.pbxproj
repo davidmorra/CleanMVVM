@@ -17,6 +17,7 @@
 		62A6FE5B2B8B6C0400127EF4 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE5A2B8B6C0400127EF4 /* AppConfiguration.swift */; };
 		62A6FE6E2B8CBACB00127EF4 /* CharactersRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE6D2B8CBACB00127EF4 /* CharactersRepositoryImpl.swift */; };
 		62A6FE702B8CD17900127EF4 /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE6F2B8CD17900127EF4 /* CharactersViewModel.swift */; };
+		62A6FE742B8E350C00127EF4 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 62A6FE732B8E350C00127EF4 /* Domain */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62A6FE742B8E350C00127EF4 /* Domain in Frameworks */,
 				6223CD092B6FCB0C00E85EC4 /* Network in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +190,7 @@
 			name = "MVVMC+Combine";
 			packageProductDependencies = (
 				6223CD082B6FCB0C00E85EC4 /* Network */,
+				62A6FE732B8E350C00127EF4 /* Domain */,
 			);
 			productName = "MVVMC+Combine";
 			productReference = 6223CCEA2B6FAF3300E85EC4 /* MVVMC+Combine.app */;
@@ -469,6 +472,10 @@
 		6223CD082B6FCB0C00E85EC4 /* Network */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Network;
+		};
+		62A6FE732B8E350C00127EF4 /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

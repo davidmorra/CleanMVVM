@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Domain
 
 final class CharactersViewModel {
     var characters = PassthroughSubject<CharactersResponse, Error>()
@@ -17,7 +18,7 @@ final class CharactersViewModel {
     
     let useCase: CharactersUseCaseProtocol
     
-    init(useCase: CharactersUseCaseProtocol = CharactersUseCase()) {
+    init(useCase: CharactersUseCaseProtocol = CharactersUseCase(charactersRepository: CharactersRepositoryImpl())) {
         self.useCase = useCase
     }
     

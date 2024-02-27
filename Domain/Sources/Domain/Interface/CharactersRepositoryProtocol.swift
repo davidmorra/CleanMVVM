@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CharactersRepositoryProtocol {
+public protocol CharactersRepositoryProtocol {
     func getAllCharacters(with requestValue: CharactersUseCaseRequestValue) async throws -> CharactersResponse
     func getCharacter(_ id: Int) async throws -> Character
     func getCharacters(_ id: [Int]) async throws -> [Character]

@@ -7,6 +7,7 @@
 
 import Foundation
 import Network
+import Domain
 
 class CharactersRepositoryImpl {
     let apiClient: ApiClient

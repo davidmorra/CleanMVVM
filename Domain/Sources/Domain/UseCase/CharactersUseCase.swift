@@ -7,23 +7,27 @@
 
 import Foundation
 
-protocol CharactersUseCaseProtocol {
+public protocol CharactersUseCaseProtocol {
     func fetchAllCharacters(with requestValue: CharactersUseCaseRequestValue) async throws -> CharactersResponse
 }
 
-final class CharactersUseCase: CharactersUseCaseProtocol {
+public final class CharactersUseCase: CharactersUseCaseProtocol {
     
-    let charactersRepository: CharactersRepositoryProtocol
+    private let charactersRepository: CharactersRepositoryProtocol
     
-    init(charactersRepository: CharactersRepositoryProtocol) {
+    public init(charactersRepository: CharactersRepositoryProtocol) {
         self.charactersRepository = charactersRepository
     }
     
-    func fetchAllCharacters(with requestValue: CharactersUseCaseRequestValue) async throws -> CharactersResponse {
+    public func fetchAllCharacters(with requestValue: CharactersUseCaseRequestValue) async throws -> CharactersResponse {
         return try await charactersRepository.getAllCharacters(with: requestValue)
     }
 }
 
-struct CharactersUseCaseRequestValue {
-    let page: Int
+public struct CharactersUseCaseRequestValue {
+    public let page: Int
+    
+    public init(page: Int) {
+        self.page = page
+    }
 }
