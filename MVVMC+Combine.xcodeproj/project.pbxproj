@@ -15,9 +15,10 @@
 		622528332B77CD7E00CB0443 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622528322B77CD7E00CB0443 /* UICollectionView+Extensions.swift */; };
 		622528362B7ABBA800CB0443 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622528352B7ABBA800CB0443 /* Coordinator.swift */; };
 		62A6FE5B2B8B6C0400127EF4 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE5A2B8B6C0400127EF4 /* AppConfiguration.swift */; };
-		62A6FE6E2B8CBACB00127EF4 /* CharactersRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE6D2B8CBACB00127EF4 /* CharactersRepositoryImpl.swift */; };
 		62A6FE702B8CD17900127EF4 /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE6F2B8CD17900127EF4 /* CharactersViewModel.swift */; };
-		62A6FE742B8E350C00127EF4 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 62A6FE732B8E350C00127EF4 /* Domain */; };
+		62A6FE772B8E427200127EF4 /* Data Layer in Frameworks */ = {isa = PBXBuildFile; productRef = 62A6FE762B8E427200127EF4 /* Data Layer */; };
+		62A6FE792B8E454800127EF4 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 62A6FE782B8E454800127EF4 /* Domain */; };
+		62A6FE7C2B8E69C100127EF4 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE7B2B8E69C100127EF4 /* CharacterCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +32,10 @@
 		622528322B77CD7E00CB0443 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		622528352B7ABBA800CB0443 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		62A6FE5A2B8B6C0400127EF4 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		62A6FE6D2B8CBACB00127EF4 /* CharactersRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersRepositoryImpl.swift; sourceTree = "<group>"; };
 		62A6FE6F2B8CD17900127EF4 /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		62A6FE722B8E341700127EF4 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
+		62A6FE752B8E423700127EF4 /* Data Layer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "Data Layer"; path = "../../Swift language/Data Layer"; sourceTree = "<group>"; };
+		62A6FE7B2B8E69C100127EF4 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62A6FE742B8E350C00127EF4 /* Domain in Frameworks */,
+				62A6FE792B8E454800127EF4 /* Domain in Frameworks */,
+				62A6FE772B8E427200127EF4 /* Data Layer in Frameworks */,
 				6223CD092B6FCB0C00E85EC4 /* Network in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +55,7 @@
 		6223CCE12B6FAF3300E85EC4 = {
 			isa = PBXGroup;
 			children = (
+				62A6FE752B8E423700127EF4 /* Data Layer */,
 				62A6FE722B8E341700127EF4 /* Domain */,
 				6223CD012B6FC9BC00E85EC4 /* Network */,
 				6223CCEC2B6FAF3300E85EC4 /* MVVMC+Combine */,
@@ -71,9 +75,7 @@
 		6223CCEC2B6FAF3300E85EC4 /* MVVMC+Combine */ = {
 			isa = PBXGroup;
 			children = (
-				62A6FE622B8B80DE00127EF4 /* Data Layer */,
 				62A6FE612B8B809000127EF4 /* Presentation Layer */,
-				62A6FE5E2B8B7F1300127EF4 /* Domain Layer */,
 				622528342B7ABB9400CB0443 /* Coordinator */,
 				6223CCED2B6FAF3300E85EC4 /* AppDelegate.swift */,
 				622528312B77CD6900CB0443 /* Extensions */,
@@ -108,13 +110,6 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		62A6FE5E2B8B7F1300127EF4 /* Domain Layer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Domain Layer";
-			sourceTree = "<group>";
-		};
 		62A6FE612B8B809000127EF4 /* Presentation Layer */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,24 +117,6 @@
 				62A6FE652B8B818B00127EF4 /* Presenters */,
 			);
 			path = "Presentation Layer";
-			sourceTree = "<group>";
-		};
-		62A6FE622B8B80DE00127EF4 /* Data Layer */ = {
-			isa = PBXGroup;
-			children = (
-				62A6FE682B8B81C500127EF4 /* Storage */,
-				62A6FE672B8B81BA00127EF4 /* Network */,
-				62A6FE642B8B818100127EF4 /* Repository */,
-			);
-			path = "Data Layer";
-			sourceTree = "<group>";
-		};
-		62A6FE642B8B818100127EF4 /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				62A6FE6D2B8CBACB00127EF4 /* CharactersRepositoryImpl.swift */,
-			);
-			path = Repository;
 			sourceTree = "<group>";
 		};
 		62A6FE652B8B818B00127EF4 /* Presenters */ = {
@@ -153,23 +130,18 @@
 		62A6FE662B8B819100127EF4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				62A6FE7A2B8E69B300127EF4 /* Cells */,
 				6223CCF12B6FAF3300E85EC4 /* CharactersViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		62A6FE672B8B81BA00127EF4 /* Network */ = {
+		62A6FE7A2B8E69B300127EF4 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				62A6FE7B2B8E69C100127EF4 /* CharacterCell.swift */,
 			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		62A6FE682B8B81C500127EF4 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Storage;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,7 +162,8 @@
 			name = "MVVMC+Combine";
 			packageProductDependencies = (
 				6223CD082B6FCB0C00E85EC4 /* Network */,
-				62A6FE732B8E350C00127EF4 /* Domain */,
+				62A6FE762B8E427200127EF4 /* Data Layer */,
+				62A6FE782B8E454800127EF4 /* Domain */,
 			);
 			productName = "MVVMC+Combine";
 			productReference = 6223CCEA2B6FAF3300E85EC4 /* MVVMC+Combine.app */;
@@ -249,10 +222,10 @@
 				62A6FE5B2B8B6C0400127EF4 /* AppConfiguration.swift in Sources */,
 				6223CCF22B6FAF3300E85EC4 /* CharactersViewController.swift in Sources */,
 				62A6FE702B8CD17900127EF4 /* CharactersViewModel.swift in Sources */,
+				62A6FE7C2B8E69C100127EF4 /* CharacterCell.swift in Sources */,
 				622528332B77CD7E00CB0443 /* UICollectionView+Extensions.swift in Sources */,
 				6223CCEE2B6FAF3300E85EC4 /* AppDelegate.swift in Sources */,
 				622528362B7ABBA800CB0443 /* Coordinator.swift in Sources */,
-				62A6FE6E2B8CBACB00127EF4 /* CharactersRepositoryImpl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +384,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dav.MVVMC-Combine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -439,6 +416,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dav.MVVMC-Combine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -473,7 +454,11 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Network;
 		};
-		62A6FE732B8E350C00127EF4 /* Domain */ = {
+		62A6FE762B8E427200127EF4 /* Data Layer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Data Layer";
+		};
+		62A6FE782B8E454800127EF4 /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
 		};

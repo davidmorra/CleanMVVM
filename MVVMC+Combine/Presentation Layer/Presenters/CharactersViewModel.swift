@@ -8,10 +8,22 @@
 import Foundation
 import Combine
 import Domain
+import Data_Layer
+
+struct CharacterItemViewModel: Hashable {
+    let id: Int
+    let name: String
+    let imageUrl: String
+    
+    init(_ model: Character) {
+        self.id = model.id
+        self.name = model.name
+        self.imageUrl = model.image
+    }
+}
 
 final class CharactersViewModel {
-    var characters = PassthroughSubject<CharactersResponse, Error>()
-     @Published var charactersArray = [Character]()
+     @Published var charactersArray = [CharacterItemViewModel]()
     
     private let currentPage = 0
     private var totalPage: Int?
@@ -24,7 +36,6 @@ final class CharactersViewModel {
     
     func loadCharacters() async throws {
         let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: 0))
-        characters.send(characterResponse)
-        charactersArray = characterResponse.results
+        charactersArray = characterResponse.results.map(CharacterItemViewModel.init)
     }
 }

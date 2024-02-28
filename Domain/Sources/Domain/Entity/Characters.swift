@@ -23,18 +23,18 @@ public struct Info: Decodable {
 
 // MARK: - Result
 public struct Character: Decodable {
-    let id: Int
-    let name: String
-    let status: Status
-    let species: String
-    let type: String
-    let gender: Gender
-    let origin: Location
-    let location: Location
-    let image: String
-    let episode: [String]
-    let url: String
-    let created: String
+    public let id: Int
+    public let name: String
+    public let status: Status
+    public let species: String
+    public let type: String
+    public let gender: Gender
+    public let origin: Location
+    public let location: Location
+    public let image: String
+    public let episode: [String]
+    public let url: String
+    public let created: String
 }
 
 public enum Gender: String, Codable {
