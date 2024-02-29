@@ -50,8 +50,7 @@ class CharactersViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
-        
-        setupSearchBar()
+//        setupSearchBar()
     }
     
     private func setupCollectionView() {
@@ -63,6 +62,7 @@ class CharactersViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         collectionView.register(CharacterCell.self, forCellWithReuseIdentifier: "CharacterCell")
+        collectionView.backgroundColor = .systemGray6
     }
     
     private func setupSearchBar() {
@@ -104,7 +104,7 @@ class CharactersViewController: UIViewController {
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
         section.interGroupSpacing = 16
         let layout = UICollectionViewCompositionalLayout(section: section)
 

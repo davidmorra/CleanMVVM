@@ -79,8 +79,9 @@ class CharacterCell: UICollectionViewCell {
         contentView.addSubview(subTitleLabel)
         contentView.layer.cornerRadius = 16
         contentView.clipsToBounds = true
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+        contentView.backgroundColor = .white
+//        contentView.layer.borderWidth = 1
+//        contentView.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
         
         let horizontalPadding: CGFloat = 12
         let verticalPadding: CGFloat = 8
