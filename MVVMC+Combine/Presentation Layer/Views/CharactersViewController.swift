@@ -91,22 +91,21 @@ class CharactersViewController: UIViewController {
     }
     
     private func layout() -> UICollectionViewCompositionalLayout {
-        let fraction: CGFloat = 1 / 2
-        let inset: CGFloat = 4
+        let fraction: CGFloat = 1/2
 
         // Item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .estimated(160))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
-        
+
         // Group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(160))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(16)
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
-        
+        section.interGroupSpacing = 16
         let layout = UICollectionViewCompositionalLayout(section: section)
 
         return layout

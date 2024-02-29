@@ -14,11 +14,13 @@ struct CharacterItemViewModel: Hashable {
     let id: Int
     let name: String
     let imageUrl: String
+    let species: String
     
     init(_ model: Character) {
         self.id = model.id
         self.name = model.name
         self.imageUrl = model.image
+        self.species = model.species
     }
 }
 

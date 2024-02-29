@@ -8,18 +8,29 @@
 import UIKit
 
 class CharacterCell: UICollectionViewCell {
+    var imageLoaderTask: Task<Data, Error>?
+    
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .systemBlue
-        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
-    let label: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,14 +52,38 @@ class CharacterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageLoaderTask = nil
+        print(#function, "Task is Nil? == ", imageLoaderTask == nil)
+    }
+    
     func configure(with viewmodel: CharacterItemViewModel) {
         imageView.image = nil
-        label.text = viewmodel.name
+        titleLabel.text = viewmodel.name
+        subTitleLabel.text = viewmodel.species
+        
+        imageLoaderTask = Task(priority: .background) { [weak self] in
+            guard let url = URL(string: viewmodel.imageUrl) else { throw URLError(.badURL) }
+            let (data, response) = try await URLSession.shared.data(from: url)
+                        
+            self?.imageView.image = UIImage(data: data)
+            
+            return data
+        }
     }
     
     private func setupViews() {
         contentView.addSubview(imageView)
-        contentView.addSubview(label)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(subTitleLabel)
+        contentView.layer.cornerRadius = 16
+        contentView.clipsToBounds = true
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+        
+        let horizontalPadding: CGFloat = 12
+        let verticalPadding: CGFloat = 8
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -56,13 +91,17 @@ class CharacterCell: UICollectionViewCell {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
             imageView.heightAnchor.constraint(equalToConstant: 120),
-//            imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             
-            label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            subTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: verticalPadding),
+            subTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: horizontalPadding),
+            subTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -horizontalPadding),
+            
+            titleLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 4),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: horizontalPadding),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -horizontalPadding),
                         
-            label.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)
+            
+            contentView.bottomAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor, constant: 12)
         ])
     }
 }
