@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setuoNavigationAppearance() {
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .systemBackground
         
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance

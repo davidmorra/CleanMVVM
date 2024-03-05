@@ -16,16 +16,22 @@ class CharactersViewController: UIViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, CharacterItemViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, CharacterItemViewModel>
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
-    let viewmodel: CharactersViewModel
-    var datasource: DataSource!
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .medium)
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        return activity
+    }()
+    
+    private let viewmodel: CharactersViewModel
+    private var datasource: DataSource!
     
     init(viewmodel: CharactersViewModel = CharactersViewModel()) {
         self.viewmodel = viewmodel
@@ -41,16 +47,41 @@ class CharactersViewController: UIViewController {
         title = "Followers"
         setupCollectionView()
         setupDataSource()
+        setupActivytyIndicator()
+        viewmodel.handleEvent(.onAppear)
         
-        Task {
-            try await viewmodel.loadCharacters()
-        }
-        
-        viewmodel.$charactersArray
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: updateSnapshot)
+        viewmodel.$state
+            .sink(receiveValue: handleState(_:))
             .store(in: &cancellables)
-//        setupSearchBar()
+        
+        viewmodel.$isLoading
+            .sink(receiveValue: isLoading(_:))
+            .store(in: &cancellables)
+    }
+    
+    private func isLoading(_ isLoading: Bool) {
+        isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+    }
+    
+    private func handleState(_ state: State<[CharacterItemViewModel]>) {
+        switch state {
+        case .idle:
+            ()
+        case .loaded(let characters):
+            updateSnapshot(with: characters)
+        case .error(let error):
+            ()
+        case .empty:
+            ()
+        }
+    }
+    
+    private func setupActivytyIndicator() { 
+        view.addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        activityIndicator.widthAnchor.constraint(equalToConstant: 44).isActive = true
     }
     
     private func setupCollectionView() {
