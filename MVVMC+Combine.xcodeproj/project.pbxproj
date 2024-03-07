@@ -21,6 +21,7 @@
 		6262FC9E2B99AE1C001AEEF1 /* CharacterDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6262FC9D2B99AE1C001AEEF1 /* CharacterDetailInfoCell.swift */; };
 		6262FCA02B99AE26001AEEF1 /* RoundedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6262FC9F2B99AE26001AEEF1 /* RoundedBackgroundView.swift */; };
 		6262FCA22B99AE2D001AEEF1 /* CharacterDetailEpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6262FCA12B99AE2D001AEEF1 /* CharacterDetailEpisodeCell.swift */; };
+		6262FCA52B99DC9B001AEEF1 /* CharacterDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6262FCA42B99DC9B001AEEF1 /* CharacterDetailsViewModel.swift */; };
 		62A6FE5B2B8B6C0400127EF4 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE5A2B8B6C0400127EF4 /* AppConfiguration.swift */; };
 		62A6FE702B8CD17900127EF4 /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE6F2B8CD17900127EF4 /* CharactersViewModel.swift */; };
 		62A6FE772B8E427200127EF4 /* Data Layer in Frameworks */ = {isa = PBXBuildFile; productRef = 62A6FE762B8E427200127EF4 /* Data Layer */; };
@@ -45,6 +46,7 @@
 		6262FC9D2B99AE1C001AEEF1 /* CharacterDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailInfoCell.swift; sourceTree = "<group>"; };
 		6262FC9F2B99AE26001AEEF1 /* RoundedBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundView.swift; sourceTree = "<group>"; };
 		6262FCA12B99AE2D001AEEF1 /* CharacterDetailEpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailEpisodeCell.swift; sourceTree = "<group>"; };
+		6262FCA42B99DC9B001AEEF1 /* CharacterDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsViewModel.swift; sourceTree = "<group>"; };
 		62A6FE5A2B8B6C0400127EF4 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		62A6FE6F2B8CD17900127EF4 /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		62A6FE722B8E341700127EF4 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
@@ -127,7 +129,8 @@
 		6262FC932B9756C7001AEEF1 /* CharacterDetails */ = {
 			isa = PBXGroup;
 			children = (
-				6262FC9A2B99AE03001AEEF1 /* Views */,
+				6262FCA32B99DC8B001AEEF1 /* Presenters */,
+				6262FC9A2B99AE03001AEEF1 /* Views & Cells */,
 				6262FC942B9756E2001AEEF1 /* CharacterDetailViewController.swift */,
 			);
 			path = CharacterDetails;
@@ -151,7 +154,7 @@
 			path = Flows;
 			sourceTree = "<group>";
 		};
-		6262FC9A2B99AE03001AEEF1 /* Views */ = {
+		6262FC9A2B99AE03001AEEF1 /* Views & Cells */ = {
 			isa = PBXGroup;
 			children = (
 				6262FC9B2B99AE13001AEEF1 /* CharacterDetailHeaderCell.swift */,
@@ -159,7 +162,15 @@
 				6262FC9F2B99AE26001AEEF1 /* RoundedBackgroundView.swift */,
 				6262FCA12B99AE2D001AEEF1 /* CharacterDetailEpisodeCell.swift */,
 			);
-			path = Views;
+			path = "Views & Cells";
+			sourceTree = "<group>";
+		};
+		6262FCA32B99DC8B001AEEF1 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				6262FCA42B99DC9B001AEEF1 /* CharacterDetailsViewModel.swift */,
+			);
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 		629781782B912CEA00BE7655 /* Characters */ = {
@@ -288,6 +299,7 @@
 				6262FC992B9767E5001AEEF1 /* CharactersFlowCoordinator.swift in Sources */,
 				6262FCA02B99AE26001AEEF1 /* RoundedBackgroundView.swift in Sources */,
 				622528332B77CD7E00CB0443 /* UICollectionView+Extensions.swift in Sources */,
+				6262FCA52B99DC9B001AEEF1 /* CharacterDetailsViewModel.swift in Sources */,
 				6223CCEE2B6FAF3300E85EC4 /* AppDelegate.swift in Sources */,
 				6262FC9E2B99AE1C001AEEF1 /* CharacterDetailInfoCell.swift in Sources */,
 				6262FCA22B99AE2D001AEEF1 /* CharacterDetailEpisodeCell.swift in Sources */,
