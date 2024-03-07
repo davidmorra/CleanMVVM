@@ -22,6 +22,10 @@ public final class CharactersUseCase: CharactersUseCaseProtocol {
     public func fetchAllCharacters(with requestValue: CharactersUseCaseRequestValue) async throws -> CharactersResponse {
         return try await charactersRepository.getAllCharacters(with: requestValue)
     }
+    
+    public func fetchCharacter(with id: Int) async throws -> Character {
+        return try await charactersRepository.getCharacter(id)
+    }
 }
 
 public struct CharactersUseCaseRequestValue {
