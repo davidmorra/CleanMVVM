@@ -20,6 +20,7 @@ enum State<T> {
 final class CharactersViewModel {
     enum Event {
         case onAppear
+        case onSelect(_ id: Int)
     }
     
     @Published var state = State<[CharacterItemViewModel]>.idle {
@@ -38,30 +39,34 @@ final class CharactersViewModel {
     }
     
     @MainActor
-    private func loadCharacters() async throws {
+    private func loadCharacters() {
         isLoading = true
         
-        try await Task.sleep(for: .seconds(2))
-        do {
-            let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: 0))
-            
-            guard !characterResponse.results.isEmpty else {
-                state = .empty
-                return
+        Task {
+            try await Task.sleep(for: .seconds(2))
+            do {
+                let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: 0))
+                
+                guard !characterResponse.results.isEmpty else {
+                    state = .empty
+                    return
+                }
+                
+                state = .loaded(characterResponse.results.map(CharacterItemViewModel.init))
+            } catch {
+                state = .error(error)
             }
-            
-            state = .loaded(characterResponse.results.map(CharacterItemViewModel.init))
-        } catch {
-            state = .error(error)
         }
+
     }
     
+    @MainActor 
     func handleEvent(_ event: Event) {
         switch event {
         case .onAppear:
-            Task {
-                try await loadCharacters()
-            }
+            loadCharacters()
+        case .onSelect(let id):
+            ()
         }
     }
 }
