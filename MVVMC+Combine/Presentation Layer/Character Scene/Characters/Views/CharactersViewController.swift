@@ -94,6 +94,7 @@ class CharactersViewController: UIViewController {
         ])
         collectionView.register(CharacterCell.self, forCellWithReuseIdentifier: "CharacterCell")
         collectionView.backgroundColor = .systemGray6
+        collectionView.delegate = self
     }
     
     private func setupSearchBar() {
@@ -140,5 +141,11 @@ class CharactersViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
 
         return layout
+    }
+}
+
+extension CharactersViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigationController?.pushViewController(CharacterDetailsViewController(), animated: true)
     }
 }
