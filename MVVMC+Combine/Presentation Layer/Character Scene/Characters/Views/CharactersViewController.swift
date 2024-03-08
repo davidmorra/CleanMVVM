@@ -33,7 +33,7 @@ class CharactersViewController: UIViewController {
     private let viewmodel: CharactersViewModel
     private var datasource: DataSource!
     
-    init(viewmodel: CharactersViewModel = CharactersViewModel()) {
+    init(viewmodel: CharactersViewModel) {
         self.viewmodel = viewmodel
         super.init(nibName: nil, bundle: nil)
     }
@@ -146,6 +146,7 @@ class CharactersViewController: UIViewController {
 
 extension CharactersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        navigationController?.pushViewController(CharacterDetailsViewController(), animated: true)
+        let id = datasource.snapshot().itemIdentifiers[indexPath.row].id
+        viewmodel.handleEvent(.onSelect(id))
     }
 }

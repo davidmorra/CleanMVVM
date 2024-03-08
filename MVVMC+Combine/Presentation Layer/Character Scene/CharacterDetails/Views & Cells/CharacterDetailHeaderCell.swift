@@ -19,7 +19,7 @@ class CharacterDetailHeaderCell: UICollectionViewCell {
         stack.axis = .vertical
         stack.spacing = 12
         stack.setCustomSpacing(2, after: characterLabel)
-        stack.distribution = .fillProportionally
+        
         return stack
     }()
     
@@ -27,6 +27,7 @@ class CharacterDetailHeaderCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
         imageView.layer.cornerRadius = imageSize/2
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -44,6 +45,10 @@ class CharacterDetailHeaderCell: UICollectionViewCell {
         label.textColor = .black.withAlphaComponent(0.5)
         return label
     }()
+    
+    var imageLoaderTask: Task<Data, Error>? {
+        willSet { imageLoaderTask?.cancel() }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,5 +73,23 @@ class CharacterDetailHeaderCell: UICollectionViewCell {
             characterImageView.widthAnchor.constraint(equalToConstant: imageSize),
         ])
 
+    }
+    
+    func fill(with viewmodel: CharacteresDetailsViewModel.Header) {
+        characterImageView.image = nil
+        
+        characterLabel.text = viewmodel.name
+        subtitleLabel.text = viewmodel.species + " - " + viewmodel.status
+            
+        guard let url = URL(string: viewmodel.imageURL) else { return }
+        
+        imageLoaderTask = Task { [weak self] in
+            let (data, _) = try await URLSession.shared.data(from: url)
+            self?.characterImageView.image = UIImage(data: data)
+            
+            self?.imageLoaderTask = nil
+            
+            return data
+        }
     }
 }

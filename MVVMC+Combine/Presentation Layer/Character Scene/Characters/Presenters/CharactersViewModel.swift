@@ -33,9 +33,14 @@ final class CharactersViewModel {
     private var totalPage: Int?
     
     private let useCase: CharactersUseCaseProtocol
+    private var onSelect: ((Int) -> Void)?
     
-    init(useCase: CharactersUseCaseProtocol = CharactersUseCase(charactersRepository: CharactersRepositoryImpl())) {
+    init(
+        onSelect: ((Int) -> Void)?,
+        useCase: CharactersUseCaseProtocol = CharactersUseCase(charactersRepository: CharactersRepositoryImpl())
+    ) {
         self.useCase = useCase
+        self.onSelect = onSelect
     }
     
     @MainActor
@@ -66,7 +71,7 @@ final class CharactersViewModel {
         case .onAppear:
             loadCharacters()
         case .onSelect(let id):
-            ()
+            onSelect?(id)
         }
     }
 }

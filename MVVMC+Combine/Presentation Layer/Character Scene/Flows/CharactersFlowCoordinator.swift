@@ -9,7 +9,7 @@ import UIKit
 
 protocol CharactersFlowCoordinatorDependencies {
     func makeCharactersViewController() -> CharactersViewController
-    func makeCharactersDetailsViewController() -> CharacterDetailsViewController
+    func makeCharactersDetailsViewController(for characterID: Int) -> CharacterDetailsViewController
 }
 
 class CharactersFlowCoordinator: CharactersFlowCoordinatorDependencies {
@@ -24,12 +24,19 @@ class CharactersFlowCoordinator: CharactersFlowCoordinatorDependencies {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    func showDetails(for characterID: Int) {
+        let vc = makeCharactersDetailsViewController(for: characterID)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func makeCharactersViewController() -> CharactersViewController {
-        let vm = CharactersViewModel()
+        let vm = CharactersViewModel(onSelect: showDetails)
         return CharactersViewController(viewmodel: vm)
     }
     
-    func makeCharactersDetailsViewController() -> CharacterDetailsViewController {
-        .init()
+    func makeCharactersDetailsViewController(for characterID: Int) -> CharacterDetailsViewController {
+        let vm = CharacteresDetailsViewModel(characterID: characterID)
+        let vc = CharacterDetailsViewController(viewmodel: vm)
+        return vc
     }
 }

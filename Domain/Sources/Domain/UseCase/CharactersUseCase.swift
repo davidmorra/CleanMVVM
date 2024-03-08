@@ -9,6 +9,7 @@ import Foundation
 
 public protocol CharactersUseCaseProtocol {
     func fetchAllCharacters(with requestValue: CharactersUseCaseRequestValue) async throws -> CharactersResponse
+    func fetchCharacter(with id: Int) async throws -> Character
 }
 
 public final class CharactersUseCase: CharactersUseCaseProtocol {

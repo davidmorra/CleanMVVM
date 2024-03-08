@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class CharacterDetailsViewController: UIViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
@@ -16,17 +17,29 @@ class CharacterDetailsViewController: UIViewController {
     }
     
     enum Item: Hashable {
-        case headerItem
-        case infoItem(UUID = UUID())
-        case episodeItem(UUID = UUID())
+        case headerItem(CharacteresDetailsViewModel.Header)
+        case infoItem(CharacteresDetailsViewModel.Info.Location)
+        case episodeItem(CharacteresDetailsViewModel.Episode)
     }
     
-    var datasource: DataSource!
+    private var datasource: DataSource!
+    private lazy var snapshot = Snapshot()
+    private var cancellables = Set<AnyCancellable>()
+    private let viewmodel: CharacteresDetailsViewModel
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
         return collectionView
     }()
+    
+    init(viewmodel: CharacteresDetailsViewModel) {
+        self.viewmodel = viewmodel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,30 +58,66 @@ class CharacterDetailsViewController: UIViewController {
         collectionView.register(CharacterDetailEpisodeCell.self, forCellWithReuseIdentifier: CharacterDetailEpisodeCell.reuseID)
         
         setupDataSource()
+        viewmodel.fetchDetails()
+        
+        viewmodel.headerSection
+            .receive(on: DispatchQueue.main)
+            .sink { [unowned self] in
+                self.updateHeaderSection(with: $0)
+            }
+            .store(in: &cancellables)
+        
+        viewmodel.infoSection
+            .receive(on: DispatchQueue.main)
+            .sink { [unowned self] in
+                self.updateInfoSection(with: $0)
+            }
+            .store(in: &cancellables)
+        
+//        viewmodel.episodesSection
+//            .receive(on: DispatchQueue.main)
+//            .sink { [unowned self] in
+//                self.updateEpisodeSection(with: $0)
+//            }
+//            .store(in: &cancellables)
     }
     
     private func setupDataSource() {
         datasource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .headerItem:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterDetailHeaderCell.reuseID, for: indexPath)
+            case .headerItem(let header):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterDetailHeaderCell.reuseID, for: indexPath) as! CharacterDetailHeaderCell
+                cell.fill(with: header)
                 return cell
-            case .infoItem:
+            case .infoItem(let info):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterDetailInfoCell.reuseID, for: indexPath) as! CharacterDetailInfoCell
-                cell.configure("Avoe", "Hehei")
+                cell.configure(info.name, iconName: info.iconName)
                 return cell
-            case .episodeItem:
+            case .episodeItem(let episode):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterDetailEpisodeCell.reuseID, for: indexPath) as! CharacterDetailEpisodeCell
-                cell.configure(with: "", subtitle: "")
+                cell.configure(with: episode.name, subtitle: episode.episode)
                 return cell
             }
         })
         
-        var snapshot = Snapshot()
-        snapshot.appendSections([.header, .info, .episodes])
-        snapshot.appendItems([.headerItem], toSection: .header)
-        snapshot.appendItems([.infoItem(), .infoItem()], toSection: .info)
-        snapshot.appendItems([.episodeItem(), .episodeItem(), .episodeItem(), .episodeItem(), .episodeItem()], toSection: .episodes)
+        snapshot.appendSections([.header, .info,])
+    }
+    
+    private func updateHeaderSection(with header: CharacteresDetailsViewModel.Header) {
+        let header = Item.headerItem(header)
+        snapshot.appendItems([header], toSection: .header)
+        datasource.apply(snapshot)
+    }
+    
+    private func updateEpisodeSection(with episode: [CharacteresDetailsViewModel.Episode]) {
+        let episode = episode.map(Item.episodeItem)
+        snapshot.appendItems(episode, toSection: .episodes)
+        datasource.apply(snapshot)
+    }
+    
+    private func updateInfoSection(with info: [CharacteresDetailsViewModel.Info.Location]) {
+        let info = info.map(Item.infoItem)
+        snapshot.appendItems(info, toSection: .info)
         datasource.apply(snapshot)
     }
     
@@ -149,7 +198,7 @@ class CharacterDetailsViewController: UIViewController {
 
 @available(iOS 17, *)
 #Preview {
-    let controller = CharacterDetailsViewController()
+    let controller = CharacterDetailsViewController(viewmodel: .init(characterID: 0))
     return controller
 }
 

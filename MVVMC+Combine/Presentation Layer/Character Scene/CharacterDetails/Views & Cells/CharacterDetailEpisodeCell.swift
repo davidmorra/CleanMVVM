@@ -56,8 +56,8 @@ class CharacterDetailEpisodeCell: UICollectionViewCell {
     }
     
     func configure(with title: String, subtitle: String) {
-        titleLabel.text = "Pilot"
-        subtitleLabel.text = "S03E07"
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
     }
 }
 

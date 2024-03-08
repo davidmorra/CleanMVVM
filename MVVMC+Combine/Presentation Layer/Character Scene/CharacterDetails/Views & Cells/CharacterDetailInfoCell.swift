@@ -10,11 +10,12 @@ import UIKit
 class CharacterDetailInfoCell: UICollectionViewCell {
     static let reuseID = "CharacterDetailInfoCell"
     
-    private let iconSize: CGFloat = 32
+    private let iconSize: CGFloat = 28
     
     private lazy var vStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stack.axis = .vertical
+        stack.distribution = .fillProportionally
         stack.spacing = 4
         return stack
     }()
@@ -27,15 +28,14 @@ class CharacterDetailInfoCell: UICollectionViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Morty"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .systemFont(ofSize: 14, weight: .medium)
         return label
     }()
 
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Morty"
         label.font = .preferredFont(forTextStyle: .footnote)
+        label.text = "See all"
         return label
     }()
     
@@ -66,14 +66,14 @@ class CharacterDetailInfoCell: UICollectionViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: iconSize),
             
             vStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            vStack.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12),
+            vStack.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
             vStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 12),
             contentView.bottomAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 12),
         ])
     }
     
-    func configure(_ title: String, _ subtitle: String) {
+    func configure(_ title: String, iconName: String) {
         titleLabel.text = title
-        subtitleLabel.text = subtitle
+        iconImageView.image = UIImage(systemName: iconName)
     }
 }
