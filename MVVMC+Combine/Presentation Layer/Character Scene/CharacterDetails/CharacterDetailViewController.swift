@@ -18,7 +18,7 @@ class CharacterDetailsViewController: UIViewController {
     
     enum Item: Hashable {
         case headerItem(CharacteresDetailsViewModel.Header)
-        case infoItem(CharacteresDetailsViewModel.Info.Location)
+        case infoItem(CharacteresDetailsViewModel.Info)
         case episodeItem(CharacteresDetailsViewModel.Episode)
     }
     
@@ -115,7 +115,7 @@ class CharacterDetailsViewController: UIViewController {
         datasource.apply(snapshot)
     }
     
-    private func updateInfoSection(with info: [CharacteresDetailsViewModel.Info.Location]) {
+    private func updateInfoSection(with info: [CharacteresDetailsViewModel.Info]) {
         let info = info.map(Item.infoItem)
         snapshot.appendItems(info, toSection: .info)
         datasource.apply(snapshot)
@@ -157,11 +157,11 @@ class CharacterDetailsViewController: UIViewController {
         let fraction: CGFloat = 1/2
 
         // Item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .estimated(58))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .estimated(88))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         // Group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(58))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(88))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(16)
         

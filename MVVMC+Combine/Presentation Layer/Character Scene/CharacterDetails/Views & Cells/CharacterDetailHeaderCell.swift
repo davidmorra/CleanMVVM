@@ -79,7 +79,7 @@ class CharacterDetailHeaderCell: UICollectionViewCell {
         characterImageView.image = nil
         
         characterLabel.text = viewmodel.name
-        subtitleLabel.text = viewmodel.species + " - " + viewmodel.status
+        subtitleLabel.text = viewmodel.species
             
         guard let url = URL(string: viewmodel.imageURL) else { return }
         

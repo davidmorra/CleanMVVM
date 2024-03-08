@@ -10,15 +10,7 @@ import UIKit
 class CharacterDetailInfoCell: UICollectionViewCell {
     static let reuseID = "CharacterDetailInfoCell"
     
-    private let iconSize: CGFloat = 28
-    
-    private lazy var vStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
-        stack.axis = .vertical
-        stack.distribution = .fillProportionally
-        stack.spacing = 4
-        return stack
-    }()
+    private let iconSize: CGFloat = 22
     
     private lazy var iconImageView: UIImageView = {
         let icon = UIImage(systemName: "globe.americas.fill")
@@ -29,6 +21,7 @@ class CharacterDetailInfoCell: UICollectionViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.numberOfLines = 0
         return label
     }()
 
@@ -52,8 +45,8 @@ class CharacterDetailInfoCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 12
         contentView.backgroundColor = .systemBackground
         
-        contentView.addSubview(vStack)
-        vStack.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconImageView)
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -65,10 +58,11 @@ class CharacterDetailInfoCell: UICollectionViewCell {
             iconImageView.heightAnchor.constraint(equalToConstant: iconSize),
             iconImageView.widthAnchor.constraint(equalToConstant: iconSize),
             
-            vStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            vStack.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
-            vStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 12),
-            contentView.bottomAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 12),
+//            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            contentView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
         ])
     }
     
