@@ -16,18 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let navigationController = UINavigationController()
-        appCoordinator = AppCoordinator(navigationController: navigationController)
+        let appDIContainer = AppDIContainer()
+        appCoordinator = AppCoordinator(appDIContainer: appDIContainer, navigationController: navigationController)
         appCoordinator?.start()
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        setuoNavigationAppearance()
+        setupNavigationAppearance()
         
         return true
     }
     
-    private func setuoNavigationAppearance() {
+    private func setupNavigationAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.backgroundColor = .systemBackground

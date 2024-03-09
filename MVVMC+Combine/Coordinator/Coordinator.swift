@@ -15,13 +15,16 @@ protocol Coordinator {
 
 class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
+    let appDIContainer: AppDIContainer
     
-    init(navigationController: UINavigationController) {
+    init(appDIContainer: AppDIContainer, navigationController: UINavigationController) {
+        self.appDIContainer = appDIContainer
         self.navigationController = navigationController
     }
     
     func start() {
-        let characterFlowCoordinator = CharactersFlowCoordinator(navigationController: navigationController)
+        let container = appDIContainer.makeCharacteresDIContainer()
+        let characterFlowCoordinator = CharactersFlowCoordinator(navigationController: navigationController, factory: container)
         characterFlowCoordinator.start()
     }
 }

@@ -35,10 +35,7 @@ final class CharactersViewModel {
     private let useCase: CharactersUseCaseProtocol
     private var onSelect: ((Int) -> Void)?
     
-    init(
-        onSelect: ((Int) -> Void)?,
-        useCase: CharactersUseCaseProtocol = CharactersUseCase(charactersRepository: CharactersRepositoryImpl())
-    ) {
+    init(onSelect: @escaping ((Int) -> Void), useCase: CharactersUseCaseProtocol) {
         self.useCase = useCase
         self.onSelect = onSelect
     }

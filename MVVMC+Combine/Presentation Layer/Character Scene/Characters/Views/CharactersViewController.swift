@@ -69,7 +69,7 @@ class CharactersViewController: UIViewController {
             ()
         case .loaded(let characters):
             updateSnapshot(with: characters)
-        case .error(let error):
+        case .error(_):
             ()
         case .empty:
             ()

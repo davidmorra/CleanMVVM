@@ -8,7 +8,9 @@
 import UIKit
 
 class CharacterCell: UICollectionViewCell {
-    var imageLoaderTask: Task<Data, Error>?
+    var imageLoaderTask: Task<Data, Error>? {
+        willSet { imageLoaderTask?.cancel() }
+    }
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -52,12 +54,6 @@ class CharacterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        imageLoaderTask = nil
-        print(#function, "Task is Nil? == ", imageLoaderTask == nil)
-    }
-    
     func configure(with viewmodel: CharacterItemViewModel) {
         imageView.image = nil
         titleLabel.text = viewmodel.name
@@ -65,10 +61,10 @@ class CharacterCell: UICollectionViewCell {
         
         imageLoaderTask = Task(priority: .background) { [weak self] in
             guard let url = URL(string: viewmodel.imageUrl) else { throw URLError(.badURL) }
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, _) = try await URLSession.shared.data(from: url)
                         
             self?.imageView.image = UIImage(data: data)
-            
+            self?.imageLoaderTask = nil
             return data
         }
     }
