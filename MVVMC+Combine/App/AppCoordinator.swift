@@ -1,5 +1,5 @@
 //
-//  Coordinator.swift
+//  AppCoordinator.swift
 //  MVVMC+Combine
 //
 //  Created by Davit on 13.02.24.

@@ -8,16 +8,11 @@
 import UIKit
 
 class CharacterCell: UICollectionViewCell {
-    var imageLoaderTask: Task<Data, Error>? {
-        willSet { imageLoaderTask?.cancel() }
-    }
-    
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
+    let imageView: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .systemBlue
         return imageView
     }()
     
@@ -55,18 +50,10 @@ class CharacterCell: UICollectionViewCell {
     }
     
     func configure(with viewmodel: CharacterItemViewModel) {
-        imageView.image = nil
         titleLabel.text = viewmodel.name
         subTitleLabel.text = viewmodel.species
-        
-        imageLoaderTask = Task(priority: .background) { [weak self] in
-            guard let url = URL(string: viewmodel.imageUrl) else { throw URLError(.badURL) }
-            let (data, _) = try await URLSession.shared.data(from: url)
-                        
-            self?.imageView.image = UIImage(data: data)
-            self?.imageLoaderTask = nil
-            return data
-        }
+  
+        imageView.loadImage(from: viewmodel.imageUrl)
     }
     
     private func setupViews() {
@@ -76,8 +63,6 @@ class CharacterCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 16
         contentView.clipsToBounds = true
         contentView.backgroundColor = .white
-//        contentView.layer.borderWidth = 1
-//        contentView.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
         
         let horizontalPadding: CGFloat = 12
         let verticalPadding: CGFloat = 8
