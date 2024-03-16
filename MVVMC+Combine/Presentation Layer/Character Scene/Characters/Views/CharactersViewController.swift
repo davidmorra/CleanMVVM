@@ -30,9 +30,16 @@ class CharactersViewController: UIViewController {
         return activity
     }()
     
+    private lazy var footerActivityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .medium)
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        return activity
+    }()
+    
     private let viewmodel: CharactersViewModel
     private var datasource: DataSource!
-    
+    let publisher = CurrentValueSubject<Bool, Never>(false)
+
     init(viewmodel: CharactersViewModel) {
         self.viewmodel = viewmodel
         super.init(nibName: nil, bundle: nil)
@@ -48,6 +55,7 @@ class CharactersViewController: UIViewController {
         setupCollectionView()
         setupDataSource()
         setupActivytyIndicator()
+        
         viewmodel.handleEvent(.onAppear)
         
         viewmodel.$state
@@ -93,6 +101,7 @@ class CharactersViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         collectionView.register(CharacterCell.self, forCellWithReuseIdentifier: "CharacterCell")
+        collectionView.register(CustomFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "footerView")
         collectionView.backgroundColor = .systemGray6
         collectionView.delegate = self
     }
@@ -108,11 +117,30 @@ class CharactersViewController: UIViewController {
     }
 
     private func setupDataSource() {
-        datasource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, character in
+        datasource = DataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, character in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
             cell.configure(with: character)
+            
+            if indexPath.row == self.viewmodel.characters.count - 1 {
+                self.viewmodel.handleEvent(.onNextPage)
+            }
+            
             return cell
         })
+        
+        datasource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            if kind == UICollectionView.elementKindSectionFooter {
+                let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footerView", for: indexPath) as! CustomFooterView
+                footerView.bind(self.viewmodel.pagingationState, store: &self.cancellables)
+                return footerView
+            }
+            return UICollectionReusableView()
+
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
     }
     
     private func updateSnapshot(with characters: [CharacterItemViewModel]) {
@@ -138,6 +166,12 @@ class CharactersViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
         section.interGroupSpacing = 16
+        
+        // Activity Indicator Footer
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+        section.boundarySupplementaryItems = [footer]
+        
         let layout = UICollectionViewCompositionalLayout(section: section)
 
         return layout
@@ -148,5 +182,47 @@ extension CharactersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let id = datasource.snapshot().itemIdentifiers[indexPath.row].id
         viewmodel.handleEvent(.onSelect(id))
+    }
+}
+
+class CustomFooterView: UICollectionReusableView {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .medium)
+        activity.hidesWhenStopped = true
+        return activity
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.topAnchor.constraint(equalTo: topAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            bottomAnchor.constraint(equalTo: activityIndicator.bottomAnchor),
+        ])
+
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bind(_ subject: CurrentValueSubject<PagingationState, Never>, store: inout Set<AnyCancellable>) {
+        subject
+            .receive(on: DispatchQueue.main)
+            .sink { state in
+                
+                switch state {
+                case .fullyLoaded:
+                    ()
+                case .nextPage:
+                    ()
+//                    isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+                case .initialLoading:
+                    ()
+                }
+                
+            }.store(in: &store)
     }
 }

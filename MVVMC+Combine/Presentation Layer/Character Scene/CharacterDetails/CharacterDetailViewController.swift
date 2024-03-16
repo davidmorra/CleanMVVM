@@ -74,12 +74,12 @@ class CharacterDetailsViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-//        viewmodel.episodesSection
-//            .receive(on: DispatchQueue.main)
-//            .sink { [unowned self] in
-//                self.updateEpisodeSection(with: $0)
-//            }
-//            .store(in: &cancellables)
+        viewmodel.episodesSection
+            .receive(on: DispatchQueue.main)
+            .sink { [unowned self] in
+                self.updateEpisodeSection(with: $0)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupDataSource() {
@@ -100,7 +100,7 @@ class CharacterDetailsViewController: UIViewController {
             }
         })
         
-        snapshot.appendSections([.header, .info,])
+        snapshot.appendSections([.header, .info, .episodes])
     }
     
     private func updateHeaderSection(with header: CharacteresDetailsViewModel.Header) {
@@ -118,7 +118,7 @@ class CharacterDetailsViewController: UIViewController {
     private func updateInfoSection(with info: [CharacteresDetailsViewModel.Info]) {
         let info = info.map(Item.infoItem)
         snapshot.appendItems(info, toSection: .info)
-        datasource.apply(snapshot)
+        datasource.apply(snapshot, animatingDifferences: false)
     }
     
     private func layout() -> UICollectionViewCompositionalLayout {

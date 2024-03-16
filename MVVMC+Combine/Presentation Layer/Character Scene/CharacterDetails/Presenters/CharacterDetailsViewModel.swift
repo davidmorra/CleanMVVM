@@ -55,9 +55,9 @@ class CharacteresDetailsViewModel {
                     .init(name: response.origin.name, url: response.origin.url, iconName: "globe.americas.fill"),
                     .init(name: response.status.rawValue, url: "", iconName: "heart.circle.fill")
                 ])
-//                episodesSection.send(response.episode.enumerated().map({ index, _ in
-//                    Episode.init(id: index, name: "Episode", episode: "S01E02", airDate: Date.now.description)
-//                }))
+                episodesSection.send(response.episode.enumerated().map({ index, _ in
+                    Episode.init(id: index, name: "Episode", episode: "S01E02", airDate: Date.now.description)
+                }))
             } catch {
                 print(error.localizedDescription)
             }

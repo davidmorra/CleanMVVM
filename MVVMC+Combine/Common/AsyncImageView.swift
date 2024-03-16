@@ -22,7 +22,7 @@ class DefaultImageLoaderRepository: ImageLoaderRepository {
 
 class AsyncImageView: UIImageView {
     private let repository: ImageLoaderRepository
-    private var task: Task<Void, Error>?
+    private var task: Task<Void, Error>? { willSet { task?.cancel() } }
 
     init(repository: ImageLoaderRepository = DefaultImageLoaderRepository()) {
         self.repository = repository

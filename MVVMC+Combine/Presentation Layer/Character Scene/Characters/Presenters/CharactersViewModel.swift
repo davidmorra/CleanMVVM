@@ -17,10 +17,17 @@ enum State<T> {
     case empty
 }
 
+enum PagingationState {
+    case initialLoading
+    case nextPage
+    case fullyLoaded
+}
+
 final class CharactersViewModel {
     enum Event {
         case onAppear
         case onSelect(_ id: Int)
+        case onNextPage
     }
     
     @Published var state = State<[CharacterItemViewModel]>.idle {
@@ -28,9 +35,15 @@ final class CharactersViewModel {
     }
     
     @Published var isLoading = false
+    private(set) var pagingationState = CurrentValueSubject<PagingationState, Never>(.initialLoading)
     
-    private let currentPage = 0
-    private var totalPage: Int?
+    private(set) var characters = [CharacterItemViewModel]()
+    private var currentPage = 0
+    private var totalPage = 1
+    
+    var nextPage: Int { hasMorePage ? currentPage + 1 : currentPage }
+    var hasMorePage: Bool { currentPage < totalPage }
+    var numberOfItems: Int { characters.count }
     
     private let useCase: CharactersUseCaseProtocol
     private var onSelect: ((Int) -> Void)?
@@ -45,21 +58,35 @@ final class CharactersViewModel {
         isLoading = true
         
         Task {
-            try await Task.sleep(for: .seconds(2))
             do {
-                let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: 0))
+                let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: nextPage))
+                currentPage += 1
                 
                 guard !characterResponse.results.isEmpty else {
                     state = .empty
                     return
                 }
                 
-                state = .loaded(characterResponse.results.map(CharacterItemViewModel.init))
+                totalPage = characterResponse.info.pages
+                characters.append(contentsOf: characterResponse.results.map(CharacterItemViewModel.init))
+                state = .loaded(characters)
             } catch {
                 state = .error(error)
             }
         }
 
+    }
+    
+    @MainActor
+    private func loadMoreCharacters() {
+        guard hasMorePage else {
+            pagingationState.send(.fullyLoaded)
+            return
+        }
+        
+        pagingationState.send(.nextPage)
+        
+        loadCharacters()
     }
     
     @MainActor 
@@ -69,6 +96,8 @@ final class CharactersViewModel {
             loadCharacters()
         case .onSelect(let id):
             onSelect?(id)
+        case .onNextPage:
+            loadMoreCharacters()
         }
     }
 }
