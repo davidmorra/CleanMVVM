@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class CharactersViewController: UIViewController {
+public class CharactersViewController: UIViewController {
     enum Section {
         case main
     }
@@ -49,7 +49,7 @@ class CharactersViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         title = "Followers"
         setupCollectionView()
@@ -139,7 +139,7 @@ class CharactersViewController: UIViewController {
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
     }
     
@@ -179,7 +179,7 @@ class CharactersViewController: UIViewController {
 }
 
 extension CharactersViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let id = datasource.snapshot().itemIdentifiers[indexPath.row].id
         viewmodel.handleEvent(.onSelect(id))
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 import Domain
-import Data_Layer
+import Data
 import Combine
 
 class CharacteresDetailsViewModel {

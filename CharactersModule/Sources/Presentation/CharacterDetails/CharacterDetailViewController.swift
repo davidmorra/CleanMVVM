@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class CharacterDetailsViewController: UIViewController {
+public class CharacterDetailsViewController: UIViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     
@@ -41,7 +41,7 @@ class CharacterDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -196,9 +196,9 @@ class CharacterDetailsViewController: UIViewController {
 
 }
 
-@available(iOS 17, *)
-#Preview {
-    let controller = CharacterDetailsViewController(viewmodel: .init(characterID: 0))
-    return controller
-}
-
+//@available(iOS 17, *)
+//#Preview {
+//    let controller = CharacterDetailsViewController(viewmodel: .init(characterID: 0))
+//    return controller
+//}
+//

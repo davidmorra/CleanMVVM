@@ -7,6 +7,7 @@
 
 import Foundation
 import Network
+import Presentation
 
 final class AppDIContainer {
     let apiClient: ApiClient = {

@@ -7,12 +7,12 @@
 
 import Network
 import Domain
-import Data_Layer
+import Data
 
-final class CharacteresDIContainer {
+final public class CharacteresDIContainer {
     let apiClient: ApiClient
     
-    init(apiClient: ApiClient) {
+    public init(apiClient: ApiClient) {
         self.apiClient = apiClient
     }
     
@@ -27,7 +27,7 @@ final class CharacteresDIContainer {
 }
 
 extension CharacteresDIContainer: CharactersFlowCoordinatorDependencies {
-    func makeCharactersViewController(onSelect: @escaping ((Int) -> Void)) -> CharactersViewController {
+    public func makeCharactersViewController(onSelect: @escaping ((Int) -> Void)) -> CharactersViewController {
         CharactersViewController(viewmodel: makeCharactersViewModel(onSelect: onSelect))
     }
     
@@ -35,7 +35,7 @@ extension CharacteresDIContainer: CharactersFlowCoordinatorDependencies {
         CharactersViewModel(onSelect: onSelect, useCase: makeCharactersUseCase())
     }
     
-    func makeCharactersDetailsViewController(for characterID: Int) -> CharacterDetailsViewController {
+    public func makeCharactersDetailsViewController(for characterID: Int) -> CharacterDetailsViewController {
         CharacterDetailsViewController(viewmodel: makeCharacterDetailsViewModel(for: characterID))
     }
     

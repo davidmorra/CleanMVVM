@@ -7,26 +7,26 @@
 
 import UIKit
 
-protocol CharactersFlowCoordinatorDependencies {
+public protocol CharactersFlowCoordinatorDependencies {
     func makeCharactersViewController(onSelect: @escaping ((Int) -> Void)) -> CharactersViewController
     func makeCharactersDetailsViewController(for characterID: Int) -> CharacterDetailsViewController
 }
 
-class CharactersFlowCoordinator {
-    weak var navigationController: UINavigationController?
-    let factory: CharactersFlowCoordinatorDependencies
+public class CharactersFlowCoordinator {
+    private weak var navigationController: UINavigationController?
+    private let factory: CharactersFlowCoordinatorDependencies
     
-    init(navigationController: UINavigationController, factory: CharactersFlowCoordinatorDependencies) {
+    public init(navigationController: UINavigationController, factory: CharactersFlowCoordinatorDependencies) {
         self.navigationController = navigationController
         self.factory = factory
     }
     
-    func start() {
+    public func start() {
         let vc = factory.makeCharactersViewController(onSelect: showDetails)
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showDetails(for characterID: Int) {
+    public func showDetails(for characterID: Int) {
         let vc = factory.makeCharactersDetailsViewController(for: characterID)
         navigationController?.pushViewController(vc, animated: true)
     }
