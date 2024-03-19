@@ -50,6 +50,7 @@
 		6262FC9F2B99AE26001AEEF1 /* RoundedBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundView.swift; sourceTree = "<group>"; };
 		6262FCA12B99AE2D001AEEF1 /* CharacterDetailEpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailEpisodeCell.swift; sourceTree = "<group>"; };
 		6262FCA42B99DC9B001AEEF1 /* CharacterDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsViewModel.swift; sourceTree = "<group>"; };
+		626894572BA9CBDA00D3514D /* CharactersModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CharactersModule; sourceTree = "<group>"; };
 		62A6FE5A2B8B6C0400127EF4 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		62A6FE6F2B8CD17900127EF4 /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		62A6FE722B8E341700127EF4 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
@@ -77,6 +78,7 @@
 		6223CCE12B6FAF3300E85EC4 = {
 			isa = PBXGroup;
 			children = (
+				626894572BA9CBDA00D3514D /* CharactersModule */,
 				62A6FE752B8E423700127EF4 /* Data Layer */,
 				62A6FE722B8E341700127EF4 /* Domain */,
 				6223CD012B6FC9BC00E85EC4 /* Network */,
