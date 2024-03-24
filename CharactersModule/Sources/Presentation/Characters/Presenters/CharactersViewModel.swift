@@ -10,13 +10,6 @@ import Combine
 import Domain
 import Data
 
-enum State<T> {
-    case idle
-    case loaded(T)
-    case error(Error)
-    case empty
-}
-
 enum PagingationState {
     case initialLoading
     case nextPage
@@ -30,16 +23,13 @@ final class CharactersViewModel {
         case onNextPage
     }
     
-    @Published var state = State<[CharacterItemViewModel]>.idle {
-        didSet { isLoading = false }
-    }
-    
     @Published var isLoading = false
-    private(set) var pagingationState = CurrentValueSubject<PagingationState, Never>(.initialLoading)
+    @Published private(set) var characters = [CharacterItemViewModel]()
+    private(set) var error = PassthroughSubject<String, Never>()
     
-    private(set) var characters = [CharacterItemViewModel]()
-    private var currentPage = 0
-    private var totalPage = 1
+    private(set) var pagingationState = CurrentValueSubject<PagingationState, Never>(.initialLoading)
+    private(set) var currentPage = 0
+    private(set) var totalPage = 1
     
     var nextPage: Int { hasMorePage ? currentPage + 1 : currentPage }
     var hasMorePage: Bool { currentPage < totalPage }
@@ -54,24 +44,25 @@ final class CharactersViewModel {
     }
     
     @MainActor
-    private func loadCharacters() {
+    func loadCharacters() {
         isLoading = true
         
         Task {
             do {
                 let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: nextPage))
-                currentPage += 1
                 
                 guard !characterResponse.results.isEmpty else {
-                    state = .empty
+                    characters = []
                     return
                 }
                 
+                currentPage += 1
+                
                 totalPage = characterResponse.info.pages
                 characters.append(contentsOf: characterResponse.results.map(CharacterItemViewModel.init))
-                state = .loaded(characters)
+                isLoading = false
             } catch {
-                state = .error(error)
+                self.error.send(error.localizedDescription)
             }
         }
 
@@ -85,7 +76,6 @@ final class CharactersViewModel {
         }
         
         pagingationState.send(.nextPage)
-        
         loadCharacters()
     }
     

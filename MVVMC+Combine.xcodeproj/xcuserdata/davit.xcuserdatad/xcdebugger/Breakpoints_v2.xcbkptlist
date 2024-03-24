@@ -20,5 +20,69 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "95111912-A26D-42B0-944C-3DD679314D2C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CharactersModule/Sources/Presentation/Characters/Presenters/CharactersViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "loadCharacters()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "95111912-A26D-42B0-944C-3DD679314D2C - 58bd4615ed7a097"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async -&gt; () in Presentation.CharactersViewModel.loadCharacters() -&gt; ()"
+                  moduleName = "MVVMC+Combine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davit/Desktop/Swift/Architecture/MVVMC+Combine/CharactersModule/Sources/Presentation/Characters/Presenters/CharactersViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "95111912-A26D-42B0-944C-3DD679314D2C - 58bd4615ed7a097"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async -&gt; () in Presentation.CharactersViewModel.loadCharacters() -&gt; ()"
+                  moduleName = "MVVMC+Combine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davit/Desktop/Swift/Architecture/MVVMC+Combine/CharactersModule/Sources/Presentation/Characters/Presenters/CharactersViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "264">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A401B997-053A-4107-B52F-95EF29E2AE44"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CharactersModule/Sources/Presentation/Characters/Views/CharactersViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -12,7 +12,7 @@ import Domain
 public class CharactersRepositoryImpl {
     private let apiClient: ApiClient
     
-    public init(apiClient: ApiClient = .init(session: .shared)) {
+    public init(apiClient: ApiClient = .init(session: URLSession.shared)) {
         self.apiClient = apiClient
     }
 }

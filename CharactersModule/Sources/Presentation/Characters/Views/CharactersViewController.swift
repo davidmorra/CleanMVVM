@@ -58,32 +58,25 @@ public class CharactersViewController: UIViewController {
         
         viewmodel.handleEvent(.onAppear)
         
-        viewmodel.$state
-            .sink(receiveValue: handleState(_:))
+        viewmodel.$characters
+            .sink(receiveValue: updateSnapshot(with:))
             .store(in: &cancellables)
         
         viewmodel.$isLoading
             .sink(receiveValue: isLoading(_:))
+            .store(in: &cancellables)
+        
+        viewmodel.error
+            .sink { error in
+                print(">> ERROR: \(error)")
+            }
             .store(in: &cancellables)
     }
     
     private func isLoading(_ isLoading: Bool) {
         isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
-    
-    private func handleState(_ state: State<[CharacterItemViewModel]>) {
-        switch state {
-        case .idle:
-            ()
-        case .loaded(let characters):
-            updateSnapshot(with: characters)
-        case .error(_):
-            ()
-        case .empty:
-            ()
-        }
-    }
-    
+        
     private func setupActivytyIndicator() { 
         view.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
