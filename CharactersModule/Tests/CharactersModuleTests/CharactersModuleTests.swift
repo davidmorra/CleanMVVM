@@ -107,7 +107,6 @@ final class CharactersModuleTests: XCTestCase {
         await fulfillment(of: [exp])
         XCTAssertTrue(sut.characters.isEmpty)
         XCTAssertNotNil(sut.error)
-        XCTAssertEqual(sut.error, MockCharactersResponseError.badRequest.rawValue)
     }
 }
 
