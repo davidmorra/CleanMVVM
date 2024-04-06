@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,7 @@
 		626894932BAA2CE300D3514D /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 626894922BAA2CE300D3514D /* Network */; };
 		62A6FE5B2B8B6C0400127EF4 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A6FE5A2B8B6C0400127EF4 /* AppConfiguration.swift */; };
 		62D875F52B9CD2EF004519FF /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D875F42B9CD2EF004519FF /* AppDIContainer.swift */; };
+		62EA4D8B2BC170C900EF7D3D /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 62EA4D8A2BC170C900EF7D3D /* Network */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62EA4D8B2BC170C900EF7D3D /* Network in Frameworks */,
 				62076BB72BAF7C92008A7EF4 /* CharactersModule in Frameworks */,
 				62076BB92BAF7CBF008A7EF4 /* Network in Frameworks */,
 			);
@@ -161,6 +163,7 @@
 			packageProductDependencies = (
 				62076BB62BAF7C92008A7EF4 /* CharactersModule */,
 				62076BB82BAF7CBF008A7EF4 /* Network */,
+				62EA4D8A2BC170C900EF7D3D /* Network */,
 			);
 			productName = "MVVMC+Combine";
 			productReference = 6223CCEA2B6FAF3300E85EC4 /* MVVMC+Combine.app */;
@@ -214,6 +217,9 @@
 				Base,
 			);
 			mainGroup = 6223CCE12B6FAF3300E85EC4;
+			packageReferences = (
+				62EA4D892BC170C900EF7D3D /* XCLocalSwiftPackageReference "Network" */,
+			);
 			productRefGroup = 6223CCEB2B6FAF3300E85EC4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -567,6 +573,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		62EA4D892BC170C900EF7D3D /* XCLocalSwiftPackageReference "Network" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Network;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		62076BB42BAF7C77008A7EF4 /* CharactersModule */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -581,6 +594,10 @@
 			productName = Network;
 		};
 		626894922BAA2CE300D3514D /* Network */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Network;
+		};
+		62EA4D8A2BC170C900EF7D3D /* Network */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Network;
 		};
