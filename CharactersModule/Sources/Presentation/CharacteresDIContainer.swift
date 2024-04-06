@@ -27,6 +27,7 @@ final public class CharacteresDIContainer {
 }
 
 extension CharacteresDIContainer: CharactersFlowCoordinatorDependencies {
+    /// Character Screen
     public func makeCharactersViewController(onSelect: @escaping ((Int) -> Void)) -> CharactersViewController {
         CharactersViewController(viewmodel: makeCharactersViewModel(onSelect: onSelect))
     }
@@ -35,6 +36,7 @@ extension CharacteresDIContainer: CharactersFlowCoordinatorDependencies {
         CharactersViewModel(onSelect: onSelect, useCase: makeCharactersUseCase())
     }
     
+    // Character Detail Screen
     public func makeCharactersDetailsViewController(for characterID: Int) -> CharacterDetailsViewController {
         CharacterDetailsViewController(viewmodel: makeCharacterDetailsViewModel(for: characterID))
     }

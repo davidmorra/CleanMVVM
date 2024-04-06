@@ -47,8 +47,6 @@ class MockCharactersUseCase: CharactersUseCaseProtocol {
 }
 
 final class CharactersModuleTests: XCTestCase {
-    static var characters: [Character] = []
-
     var sut: CharactersViewModel!
     var mockCharactersUseCase: MockCharactersUseCase!
     var cancellables: Set<AnyCancellable>!
@@ -127,8 +125,6 @@ private extension Character {
             .init(id: 2, name: "Dummy2", status: .Alive, species: "", type: "", gender: .Male, origin: .init(name: "", url: ""), location: .init(name: "", url: ""), image: "", episode: [], url: "", created: ""),
             .init(id: 3, name: "Dummy3", status: .Alive, species: "", type: "", gender: .Male, origin: .init(name: "", url: ""), location: .init(name: "", url: ""), image: "", episode: [], url: "", created: ""),
             .init(id: 4, name: "Dummy4", status: .Alive, species: "", type: "", gender: .Male, origin: .init(name: "", url: ""), location: .init(name: "", url: ""), image: "", episode: [], url: "", created: "")
-
-
         ]
     }
 }

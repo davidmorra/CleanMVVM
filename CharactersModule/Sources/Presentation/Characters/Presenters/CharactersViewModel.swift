@@ -36,7 +36,7 @@ final class CharactersViewModel {
     var numberOfItems: Int { characters.count }
     
     private let useCase: CharactersUseCaseProtocol
-    private var onSelect: ((Int) -> Void)?
+    public var onSelect: ((Int) -> Void)?
     
     init(onSelect: @escaping ((Int) -> Void), useCase: CharactersUseCaseProtocol) {
         self.useCase = useCase
@@ -44,50 +44,47 @@ final class CharactersViewModel {
     }
     
     @MainActor
-    func loadCharacters() {
+    func loadCharacters() async {
         isLoading = true
         
-        Task {
-            do {
-                let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: nextPage))
-                
-                guard !characterResponse.results.isEmpty else {
-                    characters = []
-                    return
-                }
-                
-                currentPage += 1
-                
-                totalPage = characterResponse.info.pages
-                characters.append(contentsOf: characterResponse.results.map(CharacterItemViewModel.init))
-                isLoading = false
-            } catch {
-                self.error.send(error.localizedDescription)
+        do {
+            let characterResponse = try await useCase.fetchAllCharacters(with: .init(page: nextPage))
+            
+            guard !characterResponse.results.isEmpty else {
+                characters = []
+                return
             }
+            
+            currentPage += 1
+            
+            totalPage = characterResponse.info.pages
+            characters.append(contentsOf: characterResponse.results.map(CharacterItemViewModel.init))
+            isLoading = false
+        } catch {
+            self.error.send(error.localizedDescription)
         }
-
     }
     
     @MainActor
-    private func loadMoreCharacters() {
+    private func loadMoreCharacters() async {
         guard hasMorePage else {
             pagingationState.send(.fullyLoaded)
             return
         }
         
         pagingationState.send(.nextPage)
-        loadCharacters()
+        await loadCharacters()
     }
     
     @MainActor 
-    func handleEvent(_ event: Event) {
+    func handleEvent(_ event: Event) async {
         switch event {
         case .onAppear:
-            loadCharacters()
+            await loadCharacters()
         case .onSelect(let id):
             onSelect?(id)
         case .onNextPage:
-            loadMoreCharacters()
+            await loadMoreCharacters()
         }
     }
 }

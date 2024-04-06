@@ -56,7 +56,7 @@ public class CharactersViewController: UIViewController {
         setupDataSource()
         setupActivytyIndicator()
         
-        viewmodel.handleEvent(.onAppear)
+        Task { await viewmodel.handleEvent(.onAppear) }
         
         viewmodel.$characters
             .sink(receiveValue: updateSnapshot(with:))
@@ -115,7 +115,7 @@ public class CharactersViewController: UIViewController {
             cell.configure(with: character)
             
             if indexPath.row == self.viewmodel.characters.count - 1 {
-                self.viewmodel.handleEvent(.onNextPage)
+                Task { await self.viewmodel.handleEvent(.onNextPage) }
             }
             
             return cell
@@ -174,7 +174,7 @@ public class CharactersViewController: UIViewController {
 extension CharactersViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let id = datasource.snapshot().itemIdentifiers[indexPath.row].id
-        viewmodel.handleEvent(.onSelect(id))
+        Task { await viewmodel.handleEvent(.onSelect(id)) }
     }
 }
 

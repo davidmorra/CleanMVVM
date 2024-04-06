@@ -43,19 +43,7 @@ public class CharacterDetailsViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .systemGray5
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
-        
-        collectionView.register(CharacterDetailHeaderCell.self, forCellWithReuseIdentifier: CharacterDetailHeaderCell.reuseID)
-        collectionView.register(CharacterDetailInfoCell.self, forCellWithReuseIdentifier: CharacterDetailInfoCell.reuseID)
-        collectionView.register(CharacterDetailEpisodeCell.self, forCellWithReuseIdentifier: CharacterDetailEpisodeCell.reuseID)
+        setupCollectionView()
         
         setupDataSource()
         viewmodel.fetchDetails()
@@ -80,6 +68,22 @@ public class CharacterDetailsViewController: UIViewController {
                 self.updateEpisodeSection(with: $0)
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .systemGray5
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+        collectionView.register(CharacterDetailHeaderCell.self, forCellWithReuseIdentifier: CharacterDetailHeaderCell.reuseID)
+        collectionView.register(CharacterDetailInfoCell.self, forCellWithReuseIdentifier: CharacterDetailInfoCell.reuseID)
+        collectionView.register(CharacterDetailEpisodeCell.self, forCellWithReuseIdentifier: CharacterDetailEpisodeCell.reuseID)
     }
     
     private func setupDataSource() {
